@@ -8,26 +8,25 @@ jobs:
   CodeQL-Build:
     runs-on: ubuntu-latest
 
-  analyze:
-  name: Analyze
-  strategy:
+    strategy:
       fail-fast: false
       matrix:
         language: ['javascript', 'python']
-        
+
     permissions:
       # required for all workflows
       security-events: write
       actions: read
       contents: read
-  
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
-        
